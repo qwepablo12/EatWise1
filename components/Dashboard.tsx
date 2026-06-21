@@ -27,11 +27,9 @@ export default function Dashboard({
   const remainingCalories = targetCalories - consumedCalories;
   const fuelPercentage = Math.min(100, (consumedCalories / (targetCalories || 1)) * 100);
 
-  // Состояния для FAB и модалок
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeConsole, setActiveConsole] = useState<'none' | 'ai' | 'manual'>('none');
 
-  // Стейты ввода
   const [customCal, setCustomCal] = useState('');
   const [customPro, setCustomPro] = useState('');
   const [customFat, setCustomFat] = useState('');
@@ -40,7 +38,6 @@ export default function Dashboard({
   const [aiText, setAiText] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
 
-  // Рассчет миссий (наш таргет по белку — 100г)
   const isProteinMissionDone = consumedProtein >= 100;
   const isCalorieMissionDone = consumedCalories >= (targetCalories - 200) && consumedCalories <= (targetCalories + 200);
 
@@ -76,13 +73,13 @@ export default function Dashboard({
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         
-        {/* ХЕДЕР — Сдержанный, убрали лишний статус */}
+       
         <View style={styles.header}>
           <Text style={styles.title}>ENERGY CORE</Text>
           <Text style={styles.subtitle}>SYSTEM TIME: {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</Text>
         </View>
 
-        {/* CALORIE HERO CARD — Теперь доминирует на экране */}
+        
         <View style={styles.heroCard}>
           <Text style={styles.heroTag}>ENERGY TANK</Text>
           <View style={styles.heroRow}>
@@ -103,7 +100,6 @@ export default function Dashboard({
           </Text>
         </View>
 
-        {/* DAILY MISSION SYSTEM — Мотивация и геймификация */}
         <Text style={styles.sectionHeader}>// DAILY_MISSIONS</Text>
         <View style={styles.missionCard}>
           <View style={styles.missionRow}>
@@ -119,8 +115,6 @@ export default function Dashboard({
             <Text style={[styles.missionText, isCalorieMissionDone && styles.textDone]}>STAY NEAR CALORIE CORE ({consumedCalories} kcal)</Text>
           </View>
         </View>
-
-        {/* MACRO STATUS — Компактные бары */}
         <Text style={styles.sectionHeader}>// MACRO_STATUS</Text>
         <View style={styles.brutalSection}>
           <View style={styles.macroInfoRow}>
@@ -139,7 +133,7 @@ export default function Dashboard({
           </View>
         </View>
 
-        {/* QUICK FEED — Теперь в самом низу как вспомогательный лог */}
+
         <Text style={styles.sectionHeader}>// QUICK_FEED</Text>
         <View style={styles.actionGrid}>
           <TouchableOpacity style={styles.brutalButton} onPress={() => onQuickAdd('breakfast')}>
@@ -158,12 +152,11 @@ export default function Dashboard({
         </TouchableOpacity>
       </ScrollView>
 
-      {/* FLOATING ACTION BUTTON (FAB) */}
+
       <TouchableOpacity style={styles.fab} onPress={() => setIsMenuOpen(true)}>
         <Text style={styles.fabText}>[+]</Text>
       </TouchableOpacity>
 
-      {/* ОВЕРЛЕЙ УПРАВЛЕНИЯ (FAB MENU) */}
       <Modal visible={isMenuOpen} transparent animationType="fade" onRequestClose={() => setIsMenuOpen(false)}>
         <View style={styles.modalOverlay}>
           <View style={styles.menuContainer}>
@@ -231,7 +224,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: '900', color: theme.colors.primary, letterSpacing: -0.5 },
   subtitle: { fontSize: 11, fontWeight: '700', color: theme.colors.textSecondary, marginTop: 2, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
   
-  // КАРТОЧКА ГЕРОЯ (Калории доминируют)
+
   heroCard: { backgroundColor: '#000000', padding: 20, borderWidth: 3, borderColor: '#000000', marginBottom: 20, ...theme.brutalshading },
   heroTag: { color: theme.colors.accent, fontSize: 10, fontWeight: '900', fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace', marginBottom: 8, letterSpacing: 1 },
   heroRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
@@ -246,7 +239,7 @@ const styles = StyleSheet.create({
 
   sectionHeader: { fontSize: 12, fontWeight: '900', color: '#000000', letterSpacing: 1, marginBottom: 8, marginTop: 10, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
   
-  // КАРТОЧКА МИССИЙ
+
   missionCard: { backgroundColor: '#FFFFFF', borderWidth: 3, borderColor: '#000000', padding: 16, marginBottom: 20, ...theme.brutalshading },
   missionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
   missionCheck: { fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace', fontSize: 14, fontWeight: '900', color: '#888', marginRight: 10 },
@@ -254,7 +247,7 @@ const styles = StyleSheet.create({
   missionText: { fontSize: 12, fontWeight: '700', color: '#444' },
   textDone: { textDecorationLine: 'line-through', color: '#888' },
 
-  // МАКРОСЫ
+
   brutalSection: { backgroundColor: '#FFFFFF', borderWidth: 3, borderColor: '#000000', padding: 14, marginBottom: 20, ...theme.brutalshading },
   macroInfoRow: { flexDirection: 'row', justifyContent: 'space-between' },
   macroMiniBox: { flex: 1, alignItems: 'center' },
@@ -268,11 +261,11 @@ const styles = StyleSheet.create({
   clearButton: { borderStyle: 'dashed', borderWidth: 2, borderColor: '#E63946', padding: 12, alignItems: 'center', marginTop: 10 },
   clearButtonText: { color: '#E63946', fontWeight: '900', fontSize: 12 },
 
-  // FAB СТИЛИ
+
   fab: { position: 'absolute', bottom: 20, alignSelf: 'center', backgroundColor: '#000000', width: 64, height: 64, borderRadius: 0, borderWidth: 3, borderColor: theme.colors.accent, alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5 },
   fabText: { color: theme.colors.accent, fontSize: 24, fontWeight: '900' },
 
-  // МОДАЛЬНЫЙ ОВЕРЛЕЙ ТЕРМИНАЛА ВВОДА
+
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.85)', justifyContent: 'center', padding: 20 },
   menuContainer: { backgroundColor: '#FFFFFF', borderWidth: 4, borderColor: '#000', padding: 20, alignItems: 'center' },
   menuTitle: { fontSize: 14, fontWeight: '900', color: '#000', marginBottom: 15, alignSelf: 'flex-start', fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
@@ -281,7 +274,7 @@ const styles = StyleSheet.create({
   closeMenuButton: { marginTop: 10, padding: 10 },
   closeMenuText: { color: '#E63946', fontWeight: '900', fontSize: 12, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
 
-  // ЭЛЕМЕНТЫ ВНУТРИ МОДАЛКИ
+
   aiInput: { width: '100%', height: 100, backgroundColor: '#111', color: theme.colors.accent, padding: 12, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace', fontSize: 14, textAlignVertical: 'top', borderWidth: 2, borderColor: '#000' },
   executeBtn: { width: '100%', backgroundColor: theme.colors.accent, borderWidth: 2, borderColor: '#000', padding: 14, alignItems: 'center', marginTop: 12 },
   executeBtnText: { color: '#000', fontWeight: '900', fontSize: 13 },
