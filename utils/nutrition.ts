@@ -27,7 +27,6 @@ export const activityLabels = {
   veryActive: { label: 'Athlete', desc: 'Very hard exercise & physical job' },
 };
 
-// Вычисление калорий по Mifflin-St Jeor
 export function calculateNutrition(profile: ProfileData) {
   const w = parseFloat(profile.weight);
   const h = parseFloat(profile.height);
@@ -35,22 +34,20 @@ export function calculateNutrition(profile: ProfileData) {
 
   if (!w || !h || !a) return { calories: 0, protein: 0, fat: 0, carbs: 0 };
 
-  // BMR
+
   const bmr = profile.sex === 'male'
     ? 10 * w + 6.25 * h - 5 * a + 5
     : 10 * w + 6.25 * h - 5 * a - 161;
 
-  // TDEE
+
   const tdee = bmr * activityFactors[profile.activity];
 
-  // Adjust for Goal
   let targetCalories = tdee;
   if (profile.goal === 'lose') targetCalories = tdee - 450;
   if (profile.goal === 'gain') targetCalories = tdee + 450;
 
   const finalCal = Math.round(targetCalories);
 
-  // Спортивный макро-сплит под твои волейбольные параметры (2.1г белка, 0.9г жира)
   const protein = Math.round(w * 2.1);
   const fat = Math.round(w * 0.9);
   const remainingCal = finalCal - (protein * 4 + fat * 9);
