@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   macroItem: {
     flex: 1,
     backgroundColor: '#F9F8F6',
-    borderLeftWidth: 4, // Делаем жирный цветной акцент слева
+    borderLeftWidth: 4, 
     borderWidth: 1,
     borderColor: '#000000',
     padding: 10,
