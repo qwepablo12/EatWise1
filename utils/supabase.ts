@@ -2,7 +2,6 @@ import 'react-native-url-polyfill/auto';
 import * as SecureStore from 'expo-secure-store';
 import { createClient } from '@supabase/supabase-js';
 
-// Адаптер для безопасного хранения токенов авторизации на iOS/Android
 const ExpoSecureStoreAdapter = {
   getItem: (key: string) => {
     return SecureStore.getItemAsync(key);
@@ -15,7 +14,6 @@ const ExpoSecureStoreAdapter = {
   },
 };
 
-// ПОДСТАВЬ СВОИ ДАННЫЕ СЮДА:
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
