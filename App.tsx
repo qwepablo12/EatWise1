@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, LogBox, Platform, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'; // Импортируем правильный SafeArea
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'; 
 
 import { Sex, ActivityLevel, Goal, ProfileData, activityFactors, activityLabels, calculateNutrition } from './utils/nutrition';
 import { theme } from './utils/theme';
@@ -20,15 +20,12 @@ export default function App() {
   const [isAppReady, setIsAppReady] = useState<boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
 
-  // Стейты профиля
   const [age, setAge] = useState<string>('16');
   const [sex, setSex] = useState<Sex>('male');
   const [height, setHeight] = useState<string>('171');
   const [weight, setWeight] = useState<string>('59');
   const [activity, setActivity] = useState<ActivityLevel>('moderate');
   const [goal, setGoal] = useState<Goal>('maintain');
-
-  // Глобальные стейты съеденной еды
   const [consumedCalories, setConsumedCalories] = useState<number>(0);
   const [consumedProtein, setConsumedProtein] = useState<number>(0);
   const [consumedFat, setConsumedFat] = useState<number>(0);
@@ -185,7 +182,6 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      {/* SafeAreaView теперь изолирован сверху и не перекрывает жесты внутриScrollView */}
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }} edges={['top']}>
         <StatusBar style="dark" />
         
@@ -210,7 +206,7 @@ export default function App() {
               onReset={handleReset}
             />
           ) : (
-            /* keyboardShouldPersistTaps="handled" возвращает инпутам приоритет на нажатия */
+
             <ScrollView 
               contentContainerStyle={styles.scrollContainer} 
               showsVerticalScrollIndicator={false}
@@ -221,13 +217,11 @@ export default function App() {
                 <Text style={styles.profileLabel}>ID: TARGET_METRICS_LOG</Text>
               </View>
 
-              {/* КОМПАКТНЫЙ СТАТУС-ТАРГЕТ КАРД */}
               <View style={styles.targetCard}>
                 <Text style={styles.targetCaloriesText}>{nutrition.calories} kcal/day</Text>
                 <Text style={styles.targetSubText}>SYSTEM COMPUTE MATRIX TARGET</Text>
               </View>
 
-              {/* КОМПАКТНЫЕ СТРОКИ ДАННЫХ С ИНПУТАМИ */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>BIOLOGICAL INDEX</Text>
                 
@@ -306,7 +300,6 @@ export default function App() {
           )}
         </View>
 
-        {/* TAB BAR */}
         <View style={styles.tabBar}>
           <TouchableOpacity style={styles.tabItem} onPress={() => setCurrentTab('home')}>
             <Text style={[styles.tabIcon, currentTab === 'home' && styles.activeTabIcon]}>📊</Text>
@@ -323,12 +316,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  // Добавь эти стили в объект StyleSheet.create в App.tsx:
   compactMetricsRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '100%' },
   compactInputGroup: { flex: 1 },
   compactInputLabel: { fontSize: 9, fontWeight: '900', color: '#555', marginBottom: 4, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
   compactInput: { backgroundColor: '#F5F4EF', padding: 10, borderWidth: 2, borderColor: '#000000', fontSize: 16, fontWeight: '900', color: '#000000', textAlign: 'center' },
-  // Добавь эти стили внутрь существующего объекта стилей в App.tsx:
   targetCard: { backgroundColor: '#000', padding: 16, borderWidth: 3, borderColor: '#000', marginBottom: 20, alignItems: 'center' },
   targetCaloriesText: { fontSize: 24, fontWeight: '900', color: theme.colors.accent },
   targetSubText: { fontSize: 9, color: '#666', fontWeight: '800', marginTop: 4, fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace' },
