@@ -7,9 +7,8 @@ export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false); // Переключатель Вход / Регистрация
+  const [isSignUp, setIsSignUp] = useState(false); 
 
-  // Функция для Входа или Регистрации
   const handleAuth = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields.');
@@ -19,7 +18,6 @@ export default function Auth() {
     setLoading(true);
 
     if (isSignUp) {
-      // РЕГИСТРАЦИЯ
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) {
         Alert.alert('Registration Error', error.message);
@@ -27,7 +25,6 @@ export default function Auth() {
         Alert.alert('Success!', 'Check your email for the confirmation link! ✉️');
       }
     } else {
-      // ВХОД
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) Alert.alert('Login Error', error.message);
     }
