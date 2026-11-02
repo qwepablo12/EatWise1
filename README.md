@@ -2,6 +2,7 @@
 
 EatWise is a calorie and macro tracker that acts as a dedicated **"Nutrition OS"** for athletes. Instead of complex manual logging, it uses advanced AI to parse free-form text input and instantly calculate precise nutritional breakdowns.
 
+
 [![Android APK](https://img.shields.io/badge/Download-APK-green?style=for-the-badge&logo=android)](https://expo.dev/artifacts/eas/Os2-DCM8EvnR6L_VvMGkIwICJySCeMKfCBqSPZjDY14.apk)
 
 

@@ -28,13 +28,27 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-status-bar",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "EatWise uses the camera to scan food barcodes."
+        }
+      ]
     ],
     "extra": {
       "eas": {
         "projectId": "a1748d1a-6734-4cb9-9fd1-35e39770d30f"
       }
     },
-    "owner": "12qwepablo"
+    "owner": "12qwepablo",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a1748d1a-6734-4cb9-9fd1-35e39770d30f"
+    }
   }
 }

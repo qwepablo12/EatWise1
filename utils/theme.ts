@@ -1,26 +1,78 @@
-export const theme = {
-  colors: {
-    // Основные брутальные цвета
-    background: '#F0F1F5',      // Плотный технологичный фон
-    surface: '#FFFFFF',         // Белый для карточек, но с жестким контуром
-    primary: '#000000',         // Все главные элементы и текст — глубокий черный
-    accent: '#CCFF00',          // Кислотно-желтый (Volt / Neon Lime) для главного фокуса
-    
-    // Макронутриенты (плотные, спортивные цвета)
-    protein: '#FF3B30',         // Агрессивный красный (Мышцы / Сила)
-    fat: '#FFCC00',             // Плотный желтый (Энергия)
-    carbs: '#007AFF',           // Яркий синий (Гликоген / Топливо)
-    
-    textPrimary: '#000000',
-    textSecondary: '#555555',
-    border: '#000000',          // Жесткий черный контур для всего
-  },
-  brutalshading: {
-    // Кастомная жесткая брутальная тень
-    shadowColor: '#000000',
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5, // Для Android
-  }
+import React, { createContext, useContext, useMemo } from 'react';
+import { useColorScheme } from 'react-native';
+
+export type ThemeColors = {
+  background: string;
+  card: string;
+  primaryText: string;
+  secondaryText: string;
+  accent: string;
+  protein: string;
+  fat: string;
+  carbs: string;
+  border: string;
+  danger: string;
 };
+
+export const radius = {
+  sm: 12,
+  md: 16,
+  lg: 20,
+};
+
+export const spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+};
+
+const lightColors: ThemeColors = {
+  background: '#F4F4F7',
+  card: '#FFFFFF',
+  primaryText: '#1C1C1E',
+  secondaryText: '#8A8A8E',
+  accent: '#5B8DEF',
+  protein: '#E07A8B',
+  fat: '#E0B35B',
+  carbs: '#6FB3A0',
+  border: '#ECECEF',
+  danger: '#E0616B',
+};
+
+const darkColors: ThemeColors = {
+  background: '#0F0F12',
+  card: '#1C1C1F',
+  primaryText: '#F2F2F3',
+  secondaryText: '#8E8E93',
+  accent: '#6E9BF4',
+  protein: '#E79AA7',
+  fat: '#E5C077',
+  carbs: '#7FC2AF',
+  border: '#2A2A2D',
+  danger: '#E67A82',
+};
+
+export type Theme = {
+  colors: ThemeColors;
+  radius: typeof radius;
+  spacing: typeof spacing;
+  isDark: boolean;
+};
+
+const lightTheme: Theme = { colors: lightColors, radius, spacing, isDark: false };
+const darkTheme: Theme = { colors: darkColors, radius, spacing, isDark: true };
+
+const ThemeContext = createContext<Theme>(lightTheme);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const scheme = useColorScheme();
+  const value = useMemo(() => (scheme === 'dark' ? darkTheme : lightTheme), [scheme]);
+  return React.createElement(ThemeContext.Provider, { value }, children);
+}
+
+export function useTheme(): Theme {
+  return useContext(ThemeContext);
+}
